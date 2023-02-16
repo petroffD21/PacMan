@@ -21,3 +21,5 @@ image.onload = () => {
         canvas.height
     )
 }
+
+//todo keyboard input i pacman da si smenq sprite sheet kartinkata spored inputa/posokata
