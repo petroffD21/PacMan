@@ -3,13 +3,12 @@ let canvas = document.querySelector('canvas')
 let context = canvas.getContext('2d')
 
 let image = new Image()
-image.src = 'spritesheet.png'
+image.src = 'sprite-sheet.png'
 
 image.onload = () => {
-    context.clearRect(-450, 0, canvas.width, canvas.height)
     context.drawImage(
         image,
-        -450,
+        -230,
         0, // whole spritesheet x and y offset positions
         image.width,
         image.height, // width and height of the source image
