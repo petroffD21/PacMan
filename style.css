@@ -1,4 +1,6 @@
 canvas {
+    position: aboslute;
+    border: 10px solid red;
     image-rendering: -moz-crisp-edges;
     image-rendering: -webkit-crisp-edges;
     image-rendering: pixelated;
@@ -9,6 +11,6 @@ body {
     background-color: black;
 }
 
-/* img {
+img {
     position: absolute;
-} */
+}

@@ -8,62 +8,93 @@ image.src = 'sprite-sheet.png'
 image.onload = () => {
     context.drawImage(
         image,
-        -230,
-        0, // whole spritesheet x and y offset positions
-        image.width,
-        image.height, // width and height of the source image
-        -450,
+        0,
+        0,
+        225,
+        image.height, 
+        0,
         0, // offset
         canvas.width,
         canvas.height
     ) //map
-
-
+    
+    context.drawImage(
+        image,
+        230,
+        100, //TODO SLED MALKO DA GO CLIPNA SPORED HEIGHTA
+        450,
+        450,
+        50,
+        0,
+        canvas.width,
+        canvas.height
+        
+    ) // pacman sprite
+    // let pacman = {
+    //     x: 200,
+    //     y: 200,
+    //     speed: 5,
+    //     direction: 'right',
+    //     mouthOpen: true,
+    //     radius: 20,
+    
+    //     draw: function() {
+    //         context.drawImage(
+    //             image,
+    //             0,
+    //             0,
+    //             100,
+    //             this.x,
+    //             this.y,
+    //             canvas.width * 0.3,
+    //             canvas.height * 0.3
+    //         )
+    //     },
+    
+    //     move: function() {
+    //         switch(this.direction) {
+    //             case 'up':
+    //                 this.y -= this.speed;
+    //                 break;
+    //             case 'down':
+    //                 this.y += this.speed;
+    //                 break;
+    //             case 'left':
+    //                 this.x -= this.speed;
+    //                 break;
+    //             case 'right':
+    //                 this.x += this.speed;
+    //                 break;
+    //         }
+    
+    //         // Collision check
+    //         if (this.x - this.radius < 0 || this.x + this.radius > canvas.width || this.y - this.radius < 0 || this.y + this.radius > canvas.height) {
+    //             this.x = 320;
+    //             this.y = 240;
+    //             this.direction = 'right';
+    //             this.mouthOpen = true;
+    //             lives--;
+    //             updateLives();
+    //             if (lives === 0) {
+    //               gameOver();
+    //             }
+    //           }
+    //     }
+        
+    
+    // }
+    // pacman.draw()
+    // pacman.move()
 }
 
-//todo keyboard input i pacman da si smenq sprite sheet kartinkata spored inputa/posokata
+
+
 
 // Click listener to get mouse coordinates
 canvas.addEventListener('click', e => {
     console.log('X: ', e.clientX, 'Y: ', e.clientY);
 })
 
-//Keyboard Input and character
-let character = document.getElementById('pacmanRight')
-character.src = 'pacman.png'
-character.width = 30
-character.height = 30
-let characterX = -450;
-let characterY = 0;
-
-window.addEventListener('keydown', (e) => {
-    switch (e.key) {
-        case 'w':
-            //character.source = pacmannagore.png primerno
-            characterX += 0
-            characterY -= 2
-            character.style.transform = 'translate(' + characterX + 'px, ' + characterY + 'px)'
-            break;
-        case 'd':
-            characterX += 5
-            characterY += 0
-            character.style.transform = 'translate(' + characterX + 'px, ' + characterY + 'px)'
-            break;
-        case 'a':
-            characterX -= 5
-            characterY += 0
-            character.style.transform = 'translate(' + characterX + 'px, ' + characterY + 'px)'
-            break;
-        case 's':
-            characterX += 0
-            characterY += 2
-            character.style.transform = 'translate(' + characterX + 'px, ' + characterY + 'px)'
-            break;
-    }
-    console.log(e);
-    console.log(characterX, characterY);
-
-})
 
 
 
