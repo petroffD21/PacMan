@@ -4,6 +4,17 @@ let context = canvas.getContext('2d')
 let image = new Image()
 image.src = 'sprite-sheet.png'
 
+let pacmanX = 30;
+let pacmanY = 30;
+let spriteWidth = 16;
+let spriteHeight = 16;
+let frameX = 0;
+let frameY = 0;
+let gameFrame = 0;
+const staggerFrames = 5;
+
+
+console.log(frameX);
 image.onload = () => {
     context.drawImage(
         image,
@@ -16,40 +27,28 @@ image.onload = () => {
         canvas.width,
         canvas.height
     ) //map
+}
 
+function animate() {
+    
     context.drawImage(
         image,
-        230,
-        0,
-        15.5,
-        15.5,
-        50,
-        50,
+        229 + (frameX * spriteHeight),
+        0 + (frameY * spriteHeight),
+        spriteWidth,
+        spriteHeight,
+        pacmanX,
+        pacmanY,
         canvas.width * 0.06,
         canvas.height * 0.06
     ) // pacman
-
-
-
-
-    //         // Collision check
-    //         if (this.x - this.radius < 0 || this.x + this.radius > canvas.width || this.y - this.radius < 0 || this.y + this.radius > canvas.height) {
-    //             this.x = 320;
-    //             this.y = 240;
-    //             this.direction = 'right';
-    //             this.mouthOpen = true;
-    //             lives--;
-    //             updateLives();
-    //             if (lives === 0) {
-    //               gameOver();
-    //             }
-    //           }
-    //     }
-
-
+    if (frameX < 2) frameX++
+    else frameX = 0
+    requestAnimationFrame(animate)
+        // lognah frameX i gi smenq ama kartinkata na localhost-a ne se animira? 
 }
 
-
+animate();
 
 
 // Click listener to get mouse coordinates
