@@ -14,7 +14,7 @@ let gameFrame = 0;
 const staggerFrames = 5;
 
 function animate() {
-    context.clearRect(0,0,canvas.width,canvas.height)
+    context.clearRect(0, 0, canvas.width, canvas.height)
     context.drawImage(
         image,
         0,
@@ -38,14 +38,44 @@ function animate() {
         canvas.width * 0.06,
         canvas.height * 0.06
     ) // Drawing pacman
-    if (gameFrame % staggerFrames == 0) {
-        if (frameX < 2) frameX++
-        else frameX = 0
+
+    if (gameFrame % staggerFrames == 0) { // reduces pacman animation speed
+
+        window.addEventListener('keydown', (e) => {
+            // While collision != detected
+            switch (e.key) {
+                case 'd':
+                    frameY = 0;
+                    if (frameX < 2) frameX++
+                    else frameX = 0
+                    break;
+                case 'w':
+                    frameY = 2;
+                    if (frameX < 2) frameX++
+                    else frameX = 0;
+                    break;
+                case 'a':
+                    frameY = 1;
+                    if (frameX < 2) frameX++
+                    else frameX = 0;
+                    break;
+                case 's':
+                    frameY = 3;
+                    if (frameX < 2) frameX++
+                    else frameX = 0
+                    break;
+                default:
+                    frameY = 0;
+                    if (frameX < 2) frameX++
+                    else frameX = 0
+                    break;
+            }
+        })
+
     }
 
     gameFrame++;
     requestAnimationFrame(animate);
-        // lognah frameX i gi smenq ama kartinkata na localhost-a ne se animira? 
 };
 
 console.log(frameX);
