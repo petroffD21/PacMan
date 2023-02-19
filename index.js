@@ -13,9 +13,8 @@ let frameY = 0;
 let gameFrame = 0;
 const staggerFrames = 5;
 
-
-console.log(frameX);
-image.onload = () => {
+function animate() {
+    context.clearRect(0,0,canvas.width,canvas.height)
     context.drawImage(
         image,
         0,
@@ -26,11 +25,8 @@ image.onload = () => {
         0,
         canvas.width,
         canvas.height
-    ) //map
-}
+    ) // Loading the map
 
-function animate() {
-    
     context.drawImage(
         image,
         229 + (frameX * spriteHeight),
@@ -41,22 +37,25 @@ function animate() {
         pacmanY,
         canvas.width * 0.06,
         canvas.height * 0.06
-    ) // pacman
-    if (frameX < 2) frameX++
-    else frameX = 0
-    requestAnimationFrame(animate)
+    ) // Drawing pacman
+    if (gameFrame % staggerFrames == 0) {
+        if (frameX < 2) frameX++
+        else frameX = 0
+    }
+
+    gameFrame++;
+    requestAnimationFrame(animate);
         // lognah frameX i gi smenq ama kartinkata na localhost-a ne se animira? 
+};
+
+console.log(frameX);
+image.onload = () => {
+    animate();
 }
 
-animate();
 
 
 // Click listener to get mouse coordinates
 canvas.addEventListener('click', e => {
     console.log('X: ', e.clientX, 'Y: ', e.clientY);
 })
-
-
-
-
-
