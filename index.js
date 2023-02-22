@@ -40,7 +40,6 @@ function animate() {
     ) // Drawing pacman
 
     if (gameFrame % staggerFrames == 0) { // reduces pacman animation speed
-
         window.addEventListener('keydown', (e) => {
             // While collision != detected
             switch (e.key) {
@@ -71,19 +70,59 @@ function animate() {
                     break;
             }
         })
-
     }
 
     gameFrame++;
     requestAnimationFrame(animate);
 };
 
+function gameLoop() {
+    // 1 - wall
+    // 0 - dots
+    // 2 - ghosts
+    // 3 - big dot
+    let tile = 8; // 31 row, 28 columns https://media.discordapp.net/attachments/534717305574391838/1077998402018738308/64Vzd5L6UoAAAAASUVORK5CYII.png
+    let map = [
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+        [1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
+        [1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1],
+        [1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1],
+        [1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1], // tuka e na reda na upwards pacmana
+        [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+        [1,0,1,1,1,1,0,1,1,0,1,1,1,1,1,1,1,1,0,1,1,0,1,1,1,1,0,1],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [] // 31 rows
+
+    ]
+}
+
 console.log(frameX);
 image.onload = () => {
     animate();
+    setInterval(gameLoop, 1000/60)
 }
-
-
 
 // Click listener to get mouse coordinates
 canvas.addEventListener('click', e => {
