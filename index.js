@@ -92,6 +92,7 @@ function gameLoop() {
             let pacmanXPos = pacmanX * 8;
             let pacmanYPos = pacmanY * 8;
 
+
             
             switch (tile) {
                 case 1:
@@ -115,7 +116,7 @@ function gameLoop() {
                     break;
                 case 'w':
                     frameY = 2;
-                    pacmanY++;
+                    pacmanY--;
                     if (frameX < 2) frameX++
                     else frameX = 0;
                     break;
@@ -127,7 +128,7 @@ function gameLoop() {
                     break;
                 case 's':
                     frameY = 3;
-                    pacmanY--;
+                    pacmanY++;
                     if (frameX < 2) frameX++
                     else frameX = 0
                     break;
