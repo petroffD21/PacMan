@@ -1,6 +1,6 @@
 canvas {
     position: aboslute;
-    border: 10px solid yellow;
+    border: 10px dashed yellow;
     image-rendering: -moz-crisp-edges;
     image-rendering: -webkit-crisp-edges;
     image-rendering: pixelated;

@@ -5,14 +5,14 @@ let image = new Image()
 image.src = 'sprite-sheet.png'
 
 let pacmanX = 30;
-let pacmanY = 30;
+let pacmanY = 20;
 let spriteWidth = 16;
 let spriteHeight = 16;
 let frameX = 0;
 let frameY = 0;
 let gameFrame = 0;
 const staggerFrames = 5;
-
+let pacman;
 function animate() {
     context.clearRect(0, 0, canvas.width, canvas.height)
     context.drawImage(
@@ -27,7 +27,7 @@ function animate() {
         canvas.height
     ) // Loading the map
 
-    context.drawImage(
+    pacman = context.drawImage(
         image,
         229 + (frameX * spriteHeight),
         0 + (frameY * spriteHeight),
@@ -40,6 +40,9 @@ function animate() {
     ) // Drawing pacman
 
 };
+
+let pacmanXPos = 1;
+let pacmanYPos = 1;
 
 function gameLoop() {
     // 1 - wall
@@ -86,51 +89,61 @@ function gameLoop() {
         for (let column = 0; column < map[row].length; column++) {
             const tile = map[row][column];
 
-            let x = column * 8;
-            let y = row * 8;
-
-            let pacmanXPos = pacmanX * 8;
-            let pacmanYPos = pacmanY * 8;
-
-
-            
             switch (tile) {
                 case 1:
                     break;
                 case 0:
-
                     break;
             }
         }
     }
 
+
+
     if (gameFrame % staggerFrames == 0) { // reduces pacman animation speed
         window.addEventListener('keydown', (e) => {
             // While collision != detected
             switch (e.key) {
-                case 'd':
-                    frameY = 0;
-                    pacmanX++;
-                    if (frameX < 2) frameX++
-                    else frameX = 0
+                case 'd': // map[Y][X]
+                    //    20       30
+                    if (map[pacmanYPos][pacmanXPos + 1] != 1) {
+                        frameY = 0;
+                        console.log(pacmanYPos, pacmanXPos);
+                        pacmanXPos++;
+                        pacmanX += 8;
+                        if (frameX < 2) frameX++
+                        else frameX = 0
+                    } else break;
                     break;
                 case 'w':
-                    frameY = 2;
-                    pacmanY--;
-                    if (frameX < 2) frameX++
-                    else frameX = 0;
+                    if (map[pacmanYPos - 1][pacmanXPos] != 1) {
+                        frameY = 2;
+                        console.log(pacmanYPos);
+                        pacmanYPos--;
+                        pacmanY -= 8;
+                        if (frameX < 2) frameX++
+                        else frameX = 0;
+                    } else break;
                     break;
                 case 'a':
-                    frameY = 1;
-                    pacmanX--;
-                    if (frameX < 2) frameX++
-                    else frameX = 0;
+                    if (map[pacmanYPos][pacmanXPos - 1] != 1) {
+                        frameY = 1;
+                        pacmanXPos--;
+                        pacmanX -= 8;
+                        if (frameX < 2) frameX++
+                        else frameX = 0;
+                    } else break;
                     break;
                 case 's':
-                    frameY = 3;
-                    pacmanY++;
-                    if (frameX < 2) frameX++
-                    else frameX = 0
+                    //onsole.log(pacmanYPos);
+                    if (map[pacmanYPos + 1][pacmanXPos] != 1) {
+                        console.log(pacmanYPos);
+                        frameY = 3;
+                        pacmanYPos++;
+                        pacmanY += 8;
+                        if (frameX < 2) frameX++
+                        else frameX = 0
+                    } else break;
                     break;
                 default:
                     frameY = 0;
@@ -140,7 +153,7 @@ function gameLoop() {
             }
         })
     }
-
+    // console.log(pacmanX,pacmanY);
     gameFrame++;
     requestAnimationFrame(animate);
 
