@@ -4,15 +4,15 @@ let context = canvas.getContext('2d')
 let image = new Image()
 image.src = 'sprite-sheet.png'
 
-let pacmanX = 30;
-let pacmanY = 20;
+let pacmanX = 10;
+let pacmanY = 5;
 let spriteWidth = 16;
 let spriteHeight = 16;
 let frameX = 0;
 let frameY = 0;
 let gameFrame = 0;
 const staggerFrames = 5;
-let pacman;
+
 function animate() {
     context.clearRect(0, 0, canvas.width, canvas.height)
     context.drawImage(
@@ -23,11 +23,11 @@ function animate() {
         image.height,
         0,
         0,
-        canvas.width,
-        canvas.height
+        image.width/2,
+        image.height
     ) // Loading the map
 
-    pacman = context.drawImage(
+    context.drawImage(
         image,
         229 + (frameX * spriteHeight),
         0 + (frameY * spriteHeight),
@@ -35,8 +35,8 @@ function animate() {
         spriteHeight,
         pacmanX,
         pacmanY,
-        canvas.width * 0.06,
-        canvas.height * 0.06
+        canvas.width * 0.05,
+        canvas.height * 0.05
     ) // Drawing pacman
 
 };
@@ -110,7 +110,7 @@ function gameLoop() {
                         frameY = 0;
                         console.log(pacmanYPos, pacmanXPos);
                         pacmanXPos++;
-                        pacmanX += 8;
+                        pacmanX+=8;
                         if (frameX < 2) frameX++
                         else frameX = 0
                     } else break;
@@ -120,7 +120,7 @@ function gameLoop() {
                         frameY = 2;
                         console.log(pacmanYPos);
                         pacmanYPos--;
-                        pacmanY -= 8;
+                        pacmanY-=8;
                         if (frameX < 2) frameX++
                         else frameX = 0;
                     } else break;
@@ -129,7 +129,7 @@ function gameLoop() {
                     if (map[pacmanYPos][pacmanXPos - 1] != 1) {
                         frameY = 1;
                         pacmanXPos--;
-                        pacmanX -= 8;
+                        pacmanX-=8;
                         if (frameX < 2) frameX++
                         else frameX = 0;
                     } else break;
@@ -140,7 +140,8 @@ function gameLoop() {
                         console.log(pacmanYPos);
                         frameY = 3;
                         pacmanYPos++;
-                        pacmanY += 8;
+                        pacmanY+=8;
+                        console.log(pacmanX,pacmanY);
                         if (frameX < 2) frameX++
                         else frameX = 0
                     } else break;
@@ -162,7 +163,7 @@ function gameLoop() {
 console.log(frameX);
 image.onload = () => {
     animate();
-    setInterval(gameLoop, 1000 / 60)
+    setInterval(gameLoop, 1000 / 30)
 }
 
 // Click listener to get mouse coordinates
