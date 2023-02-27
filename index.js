@@ -13,36 +13,6 @@ let frameY = 0;
 let gameFrame = 0;
 const staggerFrames = 5;
 
-function animate() {
-    context.clearRect(0, 0, canvas.width, canvas.height)
-    context.drawImage(
-        image,
-        0,
-        0,
-        225,
-        image.height,
-        0,
-        0,
-        image.width/2,
-        image.height
-    ) // Loading the map
-
-    context.drawImage(
-        image,
-        229 + (frameX * spriteHeight),
-        0 + (frameY * spriteHeight),
-        spriteWidth,
-        spriteHeight,
-        pacmanX,
-        pacmanY,
-        canvas.width * 0.05,
-        canvas.height * 0.05
-    ) // Drawing pacman
-
-};
-
-let pacmanXPos = 1;
-let pacmanYPos = 1;
 
 function gameLoop() {
     // 1 - wall
@@ -50,7 +20,7 @@ function gameLoop() {
     // 2 - ghosts
     // 3 - big dot
     // 4 - flashing pink doors
-    let tile = 8; // 31 row, 28 columns https://media.discordapp.net/attachments/534717305574391838/1077998402018738308/64Vzd5L6UoAAAAASUVORK5CYII.png
+    // 31 row, 28 columns https://media.discordapp.net/attachments/534717305574391838/1077998402018738308/64Vzd5L6UoAAAAASUVORK5CYII.png tile = 8px
     let map = [
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -98,75 +68,87 @@ function gameLoop() {
         }
     }
 
+    let animate = () => {
+        context.clearRect(0, 0, canvas.width, canvas.height)
+        context.drawImage(
+            image,
+            0,
+            0,
+            225,
+            image.height,
+            0,
+            0,
+            image.width / 2,
+            image.height
+        ) // Loading the map
 
+        context.drawImage(
+            image,
+            229 + (frameX * spriteHeight),
+            0 + (frameY * spriteHeight),
+            spriteWidth,
+            spriteHeight,
+            pacmanX * 8,
+            pacmanY * 8,
+            canvas.width * 0.05,
+            canvas.height * 0.05
+        ) // Drawing pacman
+    }
 
     if (gameFrame % staggerFrames == 0) { // reduces pacman animation speed
         window.addEventListener('keydown', (e) => {
             // While collision != detected
             switch (e.key) {
-                case 'd': // map[Y][X]
-                    //    20       30
-                    if (map[pacmanYPos][pacmanXPos + 1] != 1) {
-                        frameY = 0;
-                        console.log(pacmanYPos, pacmanXPos);
-                        pacmanXPos++;
-                        pacmanX+=8;
-                        if (frameX < 2) frameX++
-                        else frameX = 0
+                case 'd':
+                    if (map[pacmanY][pacmanX + 1] != 1) {
+                        if ((pacmanY >= 1) && (pacmanY <= 29)) {
+                            frameY = 0;
+                            console.log(pacmanY, pacmanX);
+                            pacmanX++;
+                            if (frameX < 2) frameX++
+                            else frameX = 0
+                        }
                     } else break;
                     break;
                 case 'w':
-                    if (map[pacmanYPos - 1][pacmanXPos] != 1) {
-                        frameY = 2;
-                        console.log(pacmanYPos);
-                        pacmanYPos--;
-                        pacmanY-=8;
-                        if (frameX < 2) frameX++
-                        else frameX = 0;
+                    if (map[pacmanY - 1][pacmanX] != 1) {
+                        if ((pacmanY >= 1) && (pacmanY <= 31)) {
+                            frameY = 2;
+                            pacmanY--;
+                            if (frameX < 2) frameX++
+                            else frameX = 0;
+                        }
                     } else break;
                     break;
                 case 'a':
-                    if (map[pacmanYPos][pacmanXPos - 1] != 1) {
-                        frameY = 1;
-                        pacmanXPos--;
-                        pacmanX-=8;
-                        if (frameX < 2) frameX++
-                        else frameX = 0;
+                    if (map[pacmanY][pacmanX - 1] != 1) {
+                        if ((pacmanY >= 1) && (pacmanY <= 29)) {
+                            frameY = 1;
+                            pacmanX--;
+                            if (frameX < 2) frameX++
+                            else frameX = 0;
+                        }
                     } else break;
                     break;
                 case 's':
-                    //onsole.log(pacmanYPos);
-                    if (map[pacmanYPos + 1][pacmanXPos] != 1) {
-                        console.log(pacmanYPos);
-                        frameY = 3;
-                        pacmanYPos++;
-                        pacmanY+=8;
-                        console.log(pacmanX,pacmanY);
-                        if (frameX < 2) frameX++
-                        else frameX = 0
+                    if (map[pacmanY + 1][pacmanX] != 1) {
+                        if ((pacmanY >= 1) && (pacmanY <= 31)) {
+                            frameY = 3;
+                            pacmanY++;
+                            console.log(pacmanX, pacmanY);
+                            if (frameX < 2) frameX++
+                            else frameX = 0
+                        }
                     } else break;
-                    break;
-                default:
-                    frameY = 0;
-                    if (frameX < 2) frameX++
-                    else frameX = 0
                     break;
             }
         })
     }
-    // console.log(pacmanX,pacmanY);
     gameFrame++;
     requestAnimationFrame(animate);
-
 }
 
-console.log(frameX);
 image.onload = () => {
-    animate();
-    setInterval(gameLoop, 1000 / 30)
+    setInterval(gameLoop)
 }
 
-// Click listener to get mouse coordinates
-canvas.addEventListener('click', e => {
-    console.log('X: ', e.clientX, 'Y: ', e.clientY);
-})
